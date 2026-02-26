@@ -7,7 +7,16 @@ async function updateTemplate(req: AuthenticatedRequest, ctx?: { params: Promise
   await connectDB();
   const body = await req.json();
   const { id } = await (ctx?.params ?? Promise.resolve({ id: '' }));
-  const template = await Template.findByIdAndUpdate(id, body, { new: true });
+
+  // Only allow safe fields to be updated
+  const { title, description, thumbnail, canvasData, categoryId, tags, dimensions, isPremium, isActive } = body;
+
+  const updateData = Object.fromEntries(
+    Object.entries({ title, description, thumbnail, canvasData, categoryId, tags, dimensions, isPremium, isActive })
+      .filter(([, v]) => v !== undefined)
+  );
+
+  const template = await Template.findByIdAndUpdate(id, { $set: updateData }, { new: true, runValidators: true });
   if (!template) return apiError('Template not found', 404);
   return apiSuccess(template, 'Template updated');
 }
