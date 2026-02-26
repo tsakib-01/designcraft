@@ -25,6 +25,7 @@ export interface UserPublicProfile {
   avatar: string | null;
   plan: UserPlan;
   designCount: number;
+  storageUsed: number;  
   createdAt: Date;
 }
 
