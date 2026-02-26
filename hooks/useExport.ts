@@ -30,7 +30,8 @@ export function useExport() {
 
       if (format === 'pdf') {
         const { jsPDF } = await import('jspdf');
-        const { width, height } = canvas;
+        const width  = canvas.width  ?? 800;
+        const height = canvas.height ?? 600;
         const isLandscape = width > height;
         const pdf = new jsPDF({
           orientation: isLandscape ? 'l' : 'p',
