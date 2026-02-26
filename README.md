@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # DesignCraft — Production-Grade Canva Clone
 
 A full-stack, production-ready design application built with Next.js 14, TypeScript, Fabric.js, MongoDB, and Tailwind CSS.
@@ -232,3 +233,6 @@ npm start
 - [ ] Version history browser
 - [ ] Cloudinary integration
 - [ ] Webhook for export queue
+=======
+# designcraft
+>>>>>>> b78f032caeea403deace9393d0499ec64ed715ec

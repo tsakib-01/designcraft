@@ -4,9 +4,9 @@ import User from '@/lib/db/models/User';
 import { withAuth, AuthenticatedRequest } from '@/lib/auth/middleware';
 import { apiError, apiCreated } from '@/lib/utils/apiResponse';
 
-async function duplicateDesign(req: AuthenticatedRequest, ctx?: { params: Record<string, string> }) {
+async function duplicateDesign(req: AuthenticatedRequest, ctx?: { params: Promise<Record<string, string>> }) {
   await connectDB();
-  const id = ctx?.params?.id;
+  const { id } = await (ctx?.params ?? Promise.resolve({ id: '' }));
   const original = await Design.findOne({ _id: id, ownerId: req.user.userId });
   if (!original) return apiError('Design not found', 404);
 
