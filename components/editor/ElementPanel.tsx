@@ -52,9 +52,25 @@ export default function ElementPanel() {
       fontSize: style.fontSize,
       fontWeight: style.fontWeight,
       fill: '#000000',
-    } as Record<string, unknown>);
-    (text as Record<string, unknown>).id   = id;
-    (text as Record<string, unknown>).name = `Text`;
+ const addText = async (style: typeof TEXT_STYLES[number]) => {
+  const canvas = getCanvas();
+  if (!canvas) return;
+  const { fabric } = await import('fabric');
+  const id = Math.random().toString(36).slice(2);
+  const text = new fabric.IText(style.text, {
+    left: 100, top: 100,
+    fontFamily: 'Georgia, serif',
+    fontSize: style.fontSize,
+    fontWeight: style.fontWeight,
+    fill: '#000000',
+  } as unknown as fabric.IText);
+  (text as unknown as Record<string, unknown>).id   = id;
+  (text as unknown as Record<string, unknown>).name = `Text`;
+  canvas.add(text);
+  canvas.setActiveObject(text);
+  canvas.renderAll();
+  setActiveTool('select');
+};
     canvas.add(text);
     canvas.setActiveObject(text);
     canvas.renderAll();
