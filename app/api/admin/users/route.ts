@@ -31,13 +31,14 @@ async function listUsers(req: AuthenticatedRequest) {
   return apiSuccess({ items, total, page, limit, totalPages: Math.ceil(total / limit) });
 }
 
-async function updateUser(req: AuthenticatedRequest, ctx?: { params: Record<string, string> }) {
+async function updateUser(req: AuthenticatedRequest, ctx?: { params: Promise<Record<string, string>> }) {
   await connectDB();
   const body = await req.json();
   const { role, isActive, plan } = body;
+  const { id } = await (ctx?.params ?? Promise.resolve({ id: '' }));
 
   const user = await User.findByIdAndUpdate(
-    ctx?.params?.id,
+    id,
     { ...(role !== undefined && { role }), ...(isActive !== undefined && { isActive }), ...(plan !== undefined && { plan }) },
     { new: true, select: '-passwordHash' }
   );
