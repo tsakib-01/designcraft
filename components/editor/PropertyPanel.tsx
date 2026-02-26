@@ -17,7 +17,6 @@ export default function PropertyPanel() {
     return canvas.getActiveObject() ?? null;
   };
 
-  // Sync props from active object
   useEffect(() => {
     const obj = getActive();
     if (!obj) { setProps({}); return; }
@@ -44,8 +43,8 @@ export default function PropertyPanel() {
       p.fontWeight  = t.fontWeight;
       p.fontStyle   = t.fontStyle;
       p.textAlign   = t.textAlign;
-      p.underline   = t.underline;
-      p.linethrough = t.linethrough;
+      p.underline   = Boolean(t.underline);
+      p.linethrough = Boolean(t.linethrough);
     }
 
     setProps(p);
@@ -251,19 +250,19 @@ export default function PropertyPanel() {
               <div className="flex items-center gap-1">
                 <button
                   onClick={() => update('fontWeight', props.fontWeight === 'bold' ? 'normal' : 'bold')}
-                  className={cn('icon-btn', props.fontWeight === 'bold' && 'icon-btn-active')}
+                  className={cn('icon-btn', props.fontWeight === 'bold' ? 'icon-btn-active' : '')}
                 >
                   <Bold className="w-3.5 h-3.5" />
                 </button>
                 <button
                   onClick={() => update('fontStyle', props.fontStyle === 'italic' ? 'normal' : 'italic')}
-                  className={cn('icon-btn', props.fontStyle === 'italic' && 'icon-btn-active')}
+                  className={cn('icon-btn', props.fontStyle === 'italic' ? 'icon-btn-active' : '')}
                 >
                   <Italic className="w-3.5 h-3.5" />
                 </button>
                 <button
-                  onClick={() => update('underline', !props.underline)}
-                  className={cn('icon-btn', props.underline && 'icon-btn-active')}
+                  onClick={() => update('underline', !Boolean(props.underline))}
+                  className={cn('icon-btn', Boolean(props.underline) ? 'icon-btn-active' : '')}
                 >
                   <Underline className="w-3.5 h-3.5" />
                 </button>
@@ -283,7 +282,7 @@ export default function PropertyPanel() {
                   <button
                     key={value}
                     onClick={() => update('textAlign', value)}
-                    className={cn('icon-btn', props.textAlign === value && 'icon-btn-active')}
+                    className={cn('icon-btn', props.textAlign === value ? 'icon-btn-active' : '')}
                   >
                     <Icon className="w-3.5 h-3.5" />
                   </button>
