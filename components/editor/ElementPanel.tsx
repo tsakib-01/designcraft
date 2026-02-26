@@ -52,25 +52,9 @@ export default function ElementPanel() {
       fontSize: style.fontSize,
       fontWeight: style.fontWeight,
       fill: '#000000',
- const addText = async (style: typeof TEXT_STYLES[number]) => {
-  const canvas = getCanvas();
-  if (!canvas) return;
-  const { fabric } = await import('fabric');
-  const id = Math.random().toString(36).slice(2);
-  const text = new fabric.IText(style.text, {
-    left: 100, top: 100,
-    fontFamily: 'Georgia, serif',
-    fontSize: style.fontSize,
-    fontWeight: style.fontWeight,
-    fill: '#000000',
-  } as unknown as fabric.IText);
-  (text as unknown as Record<string, unknown>).id   = id;
-  (text as unknown as Record<string, unknown>).name = `Text`;
-  canvas.add(text);
-  canvas.setActiveObject(text);
-  canvas.renderAll();
-  setActiveTool('select');
-};
+    });
+    (text as unknown as Record<string, unknown>).id   = id;
+    (text as unknown as Record<string, unknown>).name = 'Text';
     canvas.add(text);
     canvas.setActiveObject(text);
     canvas.renderAll();
@@ -97,7 +81,6 @@ export default function ElementPanel() {
     else if (type === 'line') {
       shape = new fabric.Line([50, 100, 350, 100], { stroke: '#6366f1', strokeWidth: 3, left: 150, top: 200 });
     } else {
-      // Star shape using polygon
       const points = [];
       for (let i = 0; i < 10; i++) {
         const r = i % 2 === 0 ? 80 : 40;
@@ -107,8 +90,8 @@ export default function ElementPanel() {
       shape = new fabric.Polygon(points, { ...commonProps, left: 150, top: 150 });
     }
 
-    (shape as Record<string, unknown>).id   = id;
-    (shape as Record<string, unknown>).name = type.charAt(0).toUpperCase() + type.slice(1);
+    (shape as unknown as Record<string, unknown>).id   = id;
+    (shape as unknown as Record<string, unknown>).name = type.charAt(0).toUpperCase() + type.slice(1);
     canvas.add(shape);
     canvas.setActiveObject(shape);
     canvas.renderAll();
@@ -144,8 +127,8 @@ export default function ElementPanel() {
     const fullUrl = url.startsWith('/') ? `${window.location.origin}${url}` : url;
     fabric.Image.fromURL(fullUrl, (img: fabric.Image) => {
       img.scaleToWidth(Math.min(300, canvas.getWidth() / 2));
-      (img as Record<string, unknown>).id   = id;
-      (img as Record<string, unknown>).name = 'Image';
+      (img as unknown as Record<string, unknown>).id   = id;
+      (img as unknown as Record<string, unknown>).name = 'Image';
       canvas.add(img);
       canvas.setActiveObject(img);
       canvas.renderAll();
