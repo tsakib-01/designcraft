@@ -3,9 +3,9 @@ import { Asset } from '@/lib/db/models/Asset';
 import { withAuth, AuthenticatedRequest } from '@/lib/auth/middleware';
 import { apiSuccess, apiError } from '@/lib/utils/apiResponse';
 
-async function deleteAsset(req: AuthenticatedRequest, ctx?: { params: Record<string, string> }) {
+async function deleteAsset(req: AuthenticatedRequest, ctx?: { params: Promise<Record<string, string>> }) {
   await connectDB();
-  const id = ctx?.params?.id;
+  const { id } = await (ctx?.params ?? Promise.resolve({ id: '' }));
 
   const query = req.user.role === 'admin'
     ? { _id: id }
