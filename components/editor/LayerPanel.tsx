@@ -10,19 +10,19 @@ export default function LayerPanel() {
 
   const selectLayer = (layer: LayerItem) => {
     if (!canvas) return;
-    const obj = canvas.getObjects().find((o) => (o as Record<string, unknown>).id === layer.id);
+    const obj = canvas.getObjects().find((o) => (o as unknown as Record<string, unknown>).id === layer.id);
     if (obj) { canvas.setActiveObject(obj); canvas.renderAll(); }
   };
 
   const toggleVisible = (layer: LayerItem) => {
     if (!canvas) return;
-    const obj = canvas.getObjects().find((o) => (o as Record<string, unknown>).id === layer.id);
+    const obj = canvas.getObjects().find((o) => (o as unknown as Record<string, unknown>).id === layer.id);
     if (obj) { obj.set('visible', !obj.visible); canvas.renderAll(); }
   };
 
   const toggleLock = (layer: LayerItem) => {
     if (!canvas) return;
-    const obj = canvas.getObjects().find((o) => (o as Record<string, unknown>).id === layer.id);
+    const obj = canvas.getObjects().find((o) => (o as unknown as Record<string, unknown>).id === layer.id);
     if (obj) {
       const locked = !obj.selectable;
       obj.set({ selectable: locked, evented: locked });
@@ -32,19 +32,19 @@ export default function LayerPanel() {
 
   const moveUp = (layer: LayerItem) => {
     if (!canvas) return;
-    const obj = canvas.getObjects().find((o) => (o as Record<string, unknown>).id === layer.id);
+    const obj = canvas.getObjects().find((o) => (o as unknown as Record<string, unknown>).id === layer.id);
     if (obj) { canvas.bringForward(obj); canvas.renderAll(); }
   };
 
   const moveDown = (layer: LayerItem) => {
     if (!canvas) return;
-    const obj = canvas.getObjects().find((o) => (o as Record<string, unknown>).id === layer.id);
-    if (obj) { canvas.sendBackward(obj); canvas.renderAll(); }
+    const obj = canvas.getObjects().find((o) => (o as unknown as Record<string, unknown>).id === layer.id);
+    if (obj) { canvas.sendToBack(obj); canvas.renderAll(); }
   };
 
   const deleteLayer = (layer: LayerItem) => {
     if (!canvas) return;
-    const obj = canvas.getObjects().find((o) => (o as Record<string, unknown>).id === layer.id);
+    const obj = canvas.getObjects().find((o) => (o as unknown as Record<string, unknown>).id === layer.id);
     if (obj) { canvas.remove(obj); canvas.renderAll(); }
   };
 
